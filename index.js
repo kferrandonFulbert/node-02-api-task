@@ -33,15 +33,15 @@ app.get('/tasks', async (req, res) => {
 
 // Route pour ajouter une nouvelle tâche
 app.post('/tasks', async (req, res) => {
-    const { title, description } = req.body;
-    if (!title || !description) {
+    const { nom, description } = req.body;
+    if (!nom || !description) {
         return res.status(400).json({ error: 'Title and description are required' });
     }
 
     let conn;
     try {
         conn = await pool.getConnection();
-        await conn.query('INSERT INTO tasks (title, description) VALUES (?, ?)', [title, description]);
+        await conn.query('INSERT INTO tasks (nom, description) VALUES (?, ?)', [nom, description]);
         res.status(201).json({ message: 'Task added successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
